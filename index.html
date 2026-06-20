@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Astronomical Events Calendar</title>
+<style>
+  :root {
+    --bg: #0b0d17;
+    --card: #161a2b;
+    --text: #e8eaf2;
+    --muted: #9aa0b8;
+    --accent: #f4d35e;
+    --border: #2a2f45;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at 50% -20%, #1c2138, var(--bg));
+    color: var(--text); min-height: 100vh; line-height: 1.6;
+  }
+  main { max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 2rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); margin: 0 0 1.5rem; }
+  .moons { font-size: 1.6rem; letter-spacing: .3rem; margin-bottom: 1.5rem; }
+
+  .toggle { display: inline-flex; background: var(--card);
+    border: 1px solid var(--border); border-radius: 999px; padding: .25rem; margin-bottom: 1.5rem; }
+  .toggle button {
+    background: transparent; color: var(--muted); border: 0; cursor: pointer;
+    padding: .45rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: .9rem;
+  }
+  .toggle button.active { background: var(--accent); color: #1a1400; }
+
+  .feed {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem;
+  }
+  .feed h2 { margin: 0 0 .25rem; font-size: 1.1rem; }
+  .feed .meta { color: var(--muted); font-size: .85rem; margin-bottom: .75rem; }
+  .badge {
+    display: inline-block; background: var(--accent); color: #1a1400;
+    font-size: .7rem; font-weight: 700; padding: .1rem .5rem;
+    border-radius: 999px; vertical-align: middle; margin-left: .4rem;
+  }
+  .row { display: flex; gap: .5rem; }
+  input[type=text] {
+    flex: 1; min-width: 0; background: #0c0f1c; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: .6rem .7rem; font-family: ui-monospace, monospace; font-size: .8rem;
+  }
+  button.copy {
+    background: var(--accent); color: #1a1400; border: 0; border-radius: 8px;
+    padding: .6rem 1rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  button.copy:active { transform: translateY(1px); }
+  ol { color: var(--muted); padding-left: 1.2rem; }
+  ol b { color: var(--text); }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 2rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Astronomical Events</h1>
+  <p class="sub">Solstices, equinoxes, and full &amp; new moons. Each event title shows the time, e.g. <b>🌕 Full Moon (2:03am)</b>.</p>
+  <div class="moons">🌑 🌓 🌕 🌗 · 🌸 ☀ 🍂 ❄</div>
+
+  <div class="toggle">
+    <button id="tz-pacific" class="active" onclick="setTz('pacific')">Pacific Time</button>
+    <button id="tz-utc" onclick="setTz('utc')">UTC</button>
+  </div>
+
+  <div class="feed">
+    <h2>100-year feed <span class="badge">recommended</span></h2>
+    <div class="meta">~2,900 events · ~0.7 MB · loads reliably everywhere</div>
+    <div class="row">
+      <input type="text" id="url100" readonly>
+      <button class="copy" onclick="copy('url100', this)">Copy</button>
+    </div>
+  </div>
+
+  <div class="feed">
+    <h2>1000-year feed</h2>
+    <div class="meta">~28,800 events · ~6.7 MB · may be slow in some apps</div>
+    <div class="row">
+      <input type="text" id="url1000" readonly>
+      <button class="copy" onclick="copy('url1000', this)">Copy</button>
+    </div>
+  </div>
+
+  <h2 style="margin-top:2rem;font-size:1.1rem;">Add to Google Calendar</h2>
+  <ol>
+    <li>Open <a href="https://calendar.google.com">Google Calendar</a> on the web.</li>
+    <li>Next to <b>Other calendars</b>, click <b>+</b> → <b>From URL</b>.</li>
+    <li>Paste a feed URL above and click <b>Add calendar</b>.</li>
+  </ol>
+  <p style="color:var(--muted);font-size:.85rem;">
+    Apple Calendar: <b>File → New Calendar Subscription</b>. Same URLs work.
+  </p>
+
+  <footer>
+    Computed with <a href="https://github.com/cosinekitty/astronomy">Astronomy Engine</a>.
+    Open source — <a href="https://github.com/divinetomedy/astronomical">view on GitHub</a>.
+  </footer>
+</main>
+<script>
+  const BASE = "https://divinetomedy.github.io/astronomical/";
+  const FEEDS = {
+    pacific: { f100: "astronomical-pacific-100yr.ics", f1000: "astronomical-pacific.ics" },
+    utc:     { f100: "astronomical-utc-100yr.ics",     f1000: "astronomical-utc.ics" },
+  };
+  function setTz(tz) {
+    document.getElementById("url100").value = BASE + FEEDS[tz].f100;
+    document.getElementById("url1000").value = BASE + FEEDS[tz].f1000;
+    document.getElementById("tz-pacific").classList.toggle("active", tz === "pacific");
+    document.getElementById("tz-utc").classList.toggle("active", tz === "utc");
+  }
+  function copy(id, btn) {
+    navigator.clipboard.writeText(document.getElementById(id).value).then(() => {
+      const t = btn.textContent; btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = t, 1500);
+    });
+  }
+  setTz("pacific");
+</script>
+</body>
+</html>

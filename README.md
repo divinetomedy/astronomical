@@ -12,6 +12,7 @@ e.g. `🌕 Full Moon (2:03am)`. Feeds are available in **Pacific Time** and **UT
 1. Open [Google Calendar](https://calendar.google.com) on the web.
 2. In the left sidebar, next to **Other calendars**, click **+** → **From URL**.
 3. Paste one of the feed URLs below and click **Add calendar**.
+4. To get emails, open that calendar's settings and add an **All-Day Event Notification**.
 
 > Subscribing by URL keeps the calendar in sync automatically. Google refreshes
 > on its own schedule (often every 12–24h), but since these dates never change,

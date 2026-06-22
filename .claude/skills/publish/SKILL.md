@@ -58,11 +58,32 @@ Two things to keep in mind:
   Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
   ```
 
-### 4. Push
+### 4. Sync with the remote, then push
+
+The user sometimes edits files directly on GitHub or from another tool, so the
+remote may have moved ahead of local. Rebase this commit on top of any remote work
+first, then push:
 
 ```bash
-git push
+git pull --rebase && git push
 ```
+
+If the pull is clean (the common case — usually edits to different files), this just
+works and you can continue.
+
+**If the rebase reports a conflict, STOP — do not auto-resolve it.** A conflict means
+the same lines were changed both here and on the remote, which is a human decision.
+Guessing a winner silently discards someone's real work, and a loud 30-second pause
+is always cheaper than a quiet bad merge. Instead:
+
+1. Show the user the conflicting hunks and explain both sides. `git diff` displays the
+   `<<<<<<<` / `=======` / `>>>>>>>` markers around each collision.
+2. Resolve only with the user's direction, then `git add <files>` and
+   `git rebase --continue`.
+3. If anything looks unclear or wrong, `git rebase --abort` returns to safety with
+   nothing lost — then ask the user how they want to proceed.
+
+Once the rebase is clean and the push succeeds, continue.
 
 ### 5. Verify the deploy
 

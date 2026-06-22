@@ -25,13 +25,16 @@
   .sub { color: var(--muted); margin: 0 0 1.5rem; }
   .moons { font-size: 1.6rem; letter-spacing: .3rem; margin-bottom: 1.5rem; }
 
+  .toggle-wrap { text-align: center; margin-bottom: 1.5rem; }
   .toggle { display: inline-flex; background: var(--card);
-    border: 1px solid var(--border); border-radius: 999px; padding: .25rem; margin-bottom: 1.5rem; }
+    border: 1px solid var(--border); border-radius: 999px; padding: .25rem; margin-bottom: .6rem; }
   .toggle button {
     background: transparent; color: var(--muted); border: 0; cursor: pointer;
     padding: .45rem 1.1rem; border-radius: 999px; font-weight: 600; font-size: .9rem;
   }
   .toggle button.active { background: var(--accent); color: #1a1400; }
+  .tz-note { color: var(--muted); font-style: italic; font-size: .8rem;
+    max-width: 30rem; margin: 0 auto; }
 
   .feed {
     background: var(--card); border: 1px solid var(--border);
@@ -65,11 +68,14 @@
 <main>
   <h1>Astronomical Events</h1>
   <p class="sub">Solstices, equinoxes, and full &amp; new moons. Each event title shows the time, e.g. <b>🌕 Full Moon (2:03am)</b>.</p>
-  <div class="moons">🌑 🌓 🌕 🌗 · 🌸 ☀ 🍂 ❄</div>
+  <div class="moons">🌑 🌓 🌕 🌗 · 🌱 ☀️ 🍁 🌌</div>
 
-  <div class="toggle">
-    <button id="tz-pacific" class="active" onclick="setTz('pacific')">Pacific Time</button>
-    <button id="tz-utc" onclick="setTz('utc')">UTC</button>
+  <div class="toggle-wrap">
+    <div class="toggle">
+      <button id="tz-pacific" class="active" onclick="setTz('pacific')">Pacific Time</button>
+      <button id="tz-utc" onclick="setTz('utc')">UTC</button>
+    </div>
+    <p class="tz-note">The calendar uses all-day events rather than precise times (the time is shown in each event's title), so it needs a timezone.</p>
   </div>
 
   <div class="feed">

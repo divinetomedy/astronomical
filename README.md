@@ -45,11 +45,11 @@ so only use a 1000-year file if you specifically want the longer horizon.
 
 ## What's included
 
-- 🌸 March Equinox · ☀ June Solstice · 🍂 September Equinox · ❄ December Solstice
+- 🌱 Vernal Equinox · ☀️ June Solstice · 🍁 Autumnal Equinox · 🌌 December Solstice
 - 🌕 Full Moon · 🌑 New Moon
 
-Event titles are hemisphere-neutral (named by month); the season's hemisphere
-note is in the event description.
+Each title includes the event's time and timezone, e.g. `☀️ June Solstice (1:25am PDT)`.
+The season's hemisphere note is in the event description.
 
 ## Notes on times
 

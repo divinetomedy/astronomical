@@ -52,10 +52,10 @@ MOON_PHASES = {
 
 # Season attribute -> (emoji, title, hemisphere note).
 SEASONS = [
-    ("mar_equinox", "\U0001F33C", "March Equinox", "Spring in the N. Hemisphere, autumn in the S."),
-    ("jun_solstice", "\U00002600", "June Solstice", "Summer in the N. Hemisphere, winter in the S."),
-    ("sep_equinox", "\U0001F342", "September Equinox", "Autumn in the N. Hemisphere, spring in the S."),
-    ("dec_solstice", "\U00002744", "December Solstice", "Winter in the N. Hemisphere, summer in the S."),
+    ("mar_equinox", "\U0001F331", "Vernal Equinox", "Spring in the N. Hemisphere, autumn in the S."),
+    ("jun_solstice", "\U00002600\U0000FE0F", "June Solstice", "Summer in the N. Hemisphere, winter in the S."),
+    ("sep_equinox", "\U0001F341", "Autumnal Equinox", "Autumn in the N. Hemisphere, spring in the S."),
+    ("dec_solstice", "\U0001F30C", "December Solstice", "Winter in the N. Hemisphere, summer in the S."),
 ]
 
 
@@ -81,8 +81,8 @@ def fold(line):
 
 
 def clock(dt_local):
-    """Format a local datetime as a compact clock time, e.g. '3:14am', '12:00pm'."""
-    return dt_local.strftime("%-I:%M") + dt_local.strftime("%p").lower()
+    """Compact clock time with timezone abbreviation, e.g. '3:14am PST', '10:03am UTC'."""
+    return dt_local.strftime("%-I:%M") + dt_local.strftime("%p").lower() + " " + dt_local.strftime("%Z")
 
 
 def make_event(dt_local, emoji, label, note, uid_kind, dtstamp):
@@ -140,7 +140,7 @@ def collect_events(start_year, end_year, tz):
 def build_calendar(start_year, end_year, tz_key):
     label, iana = TIMEZONES[tz_key]
     tz = ZoneInfo(iana)
-    cal_name = f"Astronomical Events ({label})"
+    cal_name = f"Astronomical ({label}): Full/New Moons + Solstices/Equinoxes"
     cal_desc = f"Solstices, equinoxes, and full & new moons. Times shown in {label}."
     dtstamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 

@@ -1,10 +1,10 @@
-# Astronomical Events Calendar
+# Astronomical ([site](https://divinetomedy.github.io/astronomical/))
 
 A subscribable calendar feed of **solstices, equinoxes, and full & new moons** —
 computed astronomically and accurate for the next ~1000 years.
 
 Events appear as **all-day banners** with the event time built into the title,
-e.g. `🌕 Full Moon (2:03am)`. Feeds are available in **Pacific Time** and **UTC**
+e.g. `🌕 Full Moon (2:03am PDT)`. Feeds are available in **Pacific Time** and **UTC**
 — pick the one that matches how you want the times to read.
 
 ## Subscribe in Google Calendar
